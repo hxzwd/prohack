@@ -66,12 +66,13 @@ def h_post_route():
 	embed()
 
 
-@flask_app.route("/linreg", methods = [ "POST" ])
+@flask_app.route("/api/v1.0/linreg", methods = [ "POST" ])
 def h_linreg_route():
 	print("[h_linreg_route]: enter in h_linreg_route")
+
 	json_data = None
-	output_json_data = { }
-	result = { }
+	output_json_data = None
+
 
 	if request.method == "POST":
 		json_data = request.get_json(force = True)
@@ -80,27 +81,16 @@ def h_linreg_route():
 
 	if not is_none(json_data):
 		print("[h_linreg_route]: json_data =\n{}".format(json_data))
-		X_train = json_data["data"]["X"]
-		Y_train = json_data["data"]["Y"]
-		X_pred = json_data["predict"]["X"]
-		#X_train = map(list, X_train)
-		#Y_train = map(list, Y_train)
-		#X_pred = map(list, X_pred)
-		X_train = [ [ x ] for x in X_train ]
-		X_pred = [ [ x ] for x in X_pred ]
-		linreg_model = c_linreg_model()
-		#embed()
-		linreg_model.fit(X_train = X_train, Y_train = Y_train)
-		Y_pred = linreg_model.predict(X_pred = X_pred)
-		result["Y_pred"] = Y_pred
-		output_json_data["result"] = result
+		output_json_data = c_linreg_model.do(input_json_data = json_data)
+	else:
+		print("[h_linreg_route]: input json data is empty")
+		output_json_data = { }
 
 	print("[h_linreg_route]: output_json_data =\n{}".format(output_json_data))	
 
 	return str(output_json_data)
 
-
-	embed()
+	#embed()
 
 
 

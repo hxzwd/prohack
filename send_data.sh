@@ -9,6 +9,7 @@ DATA=""
 PORT=8000
 DATA_FILE=data_for_linreg.json
 TARGET="linreg"
+TARGET="api/v1.0/linreg"
 
 echo "read json data from: $DATA_FILE"
 echo
