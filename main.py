@@ -6,7 +6,10 @@ import sys
 import json
 
 
-from flask import Flask, request
+from flask import Flask
+from flask import request
+from flask import jsonify
+from flask_swagger import swagger
 
 
 from misc import c_linreg_model
@@ -60,6 +63,14 @@ def f_run_app(app, server_config = { }):
 def f_reg_api(api):
 	global flask_app
 	flask_app.register_blueprint(api)
+
+
+@flask_app.route("/spec")
+def h_spec_route():
+	swag = swagger(flask_app)
+	swag["info"]["version"] = "1.0"
+	swag["info"]["title"] = "api version 1.0"
+	return jsonify(swag)
 
 
 @flask_app.route("/post", methods = [ "POST" ])

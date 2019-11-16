@@ -16,6 +16,7 @@ from flask import Blueprint
 
 
 
+
 global template_folder
 template_folder = "templates"
 
@@ -26,6 +27,10 @@ api = Blueprint("api", __name__, template_folder = template_folder)
 
 def is_none(obj):
 	return isinstance(obj, type(None))
+
+
+
+
 
 
 
