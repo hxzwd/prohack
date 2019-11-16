@@ -1,4 +1,4 @@
-#!/usr/local/bin/ipython3 --no-banner
+#!/home/hjk/croc_hack/bin/ipython3 --no-banner
 #-*- coding: utf-8 -*-
 
 import os
@@ -10,7 +10,6 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_swagger import swagger
-from flask_cors import CORS
 
 
 from misc import c_linreg_model
@@ -31,8 +30,7 @@ server_config = None
 
 
 flask_app = Flask(flask_import_name)
-cors = CORS(flask_app, resources = { r"/api/*" : { "origins" : "*" } })
-flask_app.config["CORS_HEADERS"] = "Content-Type"
+
 
 
 def f_print_hello():
@@ -99,7 +97,7 @@ def h_linreg_route():
 
 	if request.method == "POST":
 		json_data = request.get_json(force = True)
-
+	
 	#embed()
 
 	if not is_none(json_data):
@@ -133,5 +131,5 @@ def main():
 
 if __name__ == "__main__":
 	main()
-	#flask_app.run(host = "0.0.0.0", port = 8080)
+
 

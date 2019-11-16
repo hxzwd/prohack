@@ -11,9 +11,9 @@ import pandas as pd
 from flask import Flask
 from flask import request
 from flask import Blueprint
+from flask_cors import CORS
 
-
-
+from IPython import embed
 
 
 
@@ -23,6 +23,8 @@ template_folder = "templates"
 
 global api
 api = Blueprint("api", __name__, template_folder = template_folder)
+cors = CORS(api, resources = { r"/api/*" : { "origins" : "*" } })
+#api.config["CORS_HEADERS"] = "Content-Type"
 
 
 def is_none(obj):
@@ -41,10 +43,13 @@ def h_metal_temperature_route():
 
 	json_data = None
 	output_json_data = None
-
+	output_json_data = { }
 
 	if request.method == "POST":
 		json_data = request.get_json(force = True)
+
+
+	#embed()
 
 
 	if not is_none(json_data):
