@@ -8,12 +8,19 @@ import json
 
 from flask import Flask, request
 
+
 from misc import c_linreg_model
+
+
+from api import api
+
 
 from IPython import embed
 
+
 global flask_app
 global server_config
+
 
 flask_import_name = __name__
 server_config = None
@@ -50,6 +57,9 @@ def f_run_app(app, server_config = { }):
 	app.run(**server_config)
 
 
+def f_reg_api(api):
+	global flask_app
+	flask_app.register_blueprint(api)
 
 
 @flask_app.route("/post", methods = [ "POST" ])
@@ -86,11 +96,13 @@ def h_linreg_route():
 		print("[h_linreg_route]: input json data is empty")
 		output_json_data = { }
 
-	print("[h_linreg_route]: output_json_data =\n{}".format(output_json_data))	
+	print("[h_linreg_route]: output_json_data =\n{}".format(output_json_data))
 
 	return str(output_json_data)
 
-	#embed()
+
+
+
 
 
 
@@ -102,6 +114,7 @@ def main():
 	#flask_app = Flask(flask_import_name)
 	print("[main]: run flask application")
 	server_config = f_get_config(section = "server")
+	f_reg_api(api)
 	f_run_app(flask_app, server_config = server_config)
 
 
